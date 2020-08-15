@@ -63,20 +63,21 @@ class CPU:
         address = 0
 
         with open(filename) as f:
-            line = line.split('#')[0].strip()
-            if line == '':
-                continue
-            try:
-                value = int(line, 2)
-            except ValueError:
-                continue
+            for line in f:
+                line = line.split('#')[0].strip()
+                if line == '':
+                    continue
+                try:
+                    value = int(line, 2)
+                except ValueError:
+                    continue
 
-            self.ram_write(address, value)
-            address += 1
+                self.ram_write(address, value)
+                address += 1
 
     def trace(self):
         print(f"TRACE: %02X | %02X %02X %02X |" % (
-            self.pc, ,
+            self.pc,
             self.ram_read(self.pc),
             self.ram_read(self.pc + 1),
             self.ram_read(self.pc + 2)
@@ -88,6 +89,41 @@ class CPU:
         print()
 
     def alu(self, op, reg_a, reg_b):
+        """
+        ALU operations
+        """
+
+        if op == "ADD":
+            self.reg[reg_a] += self.reg[reg_b]
+        elif op == "MUL":
+            self.reg[reg_a] *= self.reg[reg_b]
+        elif op == "SUB":
+            self.reg[reg_a] -= self.reg[reg_b]
+        elif op == "CMP":
+            if reg_a == reg_b:
+                self.flag_reg[EQ] = 0b00000001
+            else:
+                self.flag_reg[EQ] = 0b00000000
+        elif op == "AND":
+            self.reg[reg_a] = self.reg[reg_a] & self.reg[reg_b]
+        elif op == "MOD":
+            if self.reg[reg_b] == 0:
+                print("Cannot mod by value of 0")
+                self.HLT(reg_a, reg_b)
+            else:
+                self.reg[reg_a] %= self.reg[reg_b]
+        elif op == "SHL":
+            self.reg[reg_a] << self.reg[reg_b]
+        elif op == "SHR":
+            self.reg[reg_a] >> self.reg[reg_b]
+        elif op == "OR":
+            self.reg[reg_a] = self.reg[reg_a] | self.reg[reg_b]
+        elif op == "NOT":
+            self.reg[reg_a] -= 0b11111111
+        elif op == "XOR":
+            self.reg[reg_a] = self.reg[reg_a] ^ self.reg[reg_b]
+        else:
+            raise Exception("ALU operation is not supported")
 
     def LDI(self, reg_a, reg_b):
         self.reg[reg_a] = reg_b
@@ -109,7 +145,7 @@ class CPU:
         value = self.ram[top_of_stack_add]
         reg_num = self.ram[reg_a]
         self.reg[reg_num] = value
-        self.reg[SP] +=
+        self.reg[SP] += 1
 
     def RET(self, reg_a, reg_b):
         subroutine_addr = self.ram[self.reg[SP]]
@@ -160,12 +196,12 @@ class CPU:
     def ram_read(self, address):
         return self.ram[address]
 
-    def ram_write(self, address, value)
-    self.ram[address] = value
+    def ram_write(self, address, value):
+        self.ram[address] = value
 
     def run(self):
         while self.running:
-            ir = self.ram_read(self.pc):
+            ir = self.ram_read(self.pc)
             pc_flag = (ir & 0b00010000) >> 4
             reg_num1 = self.ram[self.pc + 1]
             reg_num2 = self.ram[self.pc + 2]
