@@ -41,17 +41,17 @@ class CPU:
         self.program_counter = 0
         self.running = True
         self.branch_table = {
-            NOP: self.NOP,
+            LDI: self.LDI,
             HLT: self.HLT,
             PRN: self.PRN,
-            LDI: self.LDI,
             MUL: self.MUL,
+            NOP: self.NOP,
+            POP: self.POP,
+            RET: self.RET,
+            CALL: self.CALL,
+            PUSH: self.PUSH,
             ADD: self.ADD,
             SUB: self.SUB,
-            PUSH: self.PUSH,
-            POP: self.POP,
-            CALL: self.CALL,
-            RET: self.RET,
             CMP: self.CMP,
             JMP: self.JMP,
             JEQ: self.JEQ,
@@ -59,6 +59,20 @@ class CPU:
         }
 
     def load(self):
+        filename = sys.argv[1]
+        address = 0
+
+        with open(filename) as f:
+            line = line.split('#')[0].strip()
+            if line == '':
+                continue
+            try:
+                value = int(line, 2)
+            except ValueError:
+                continue
+
+            self.ram_write(address, value)
+            address += 1
 
     def trace(self):
 
