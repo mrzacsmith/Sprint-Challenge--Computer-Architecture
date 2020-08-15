@@ -1,11 +1,12 @@
+#!/usr/bin/env python3
 """
 Main
 
 """
 
 import sys
-from cpu import *
+from cpu import CPU
 
 cpu = CPU()
 cpu.load()
-cpu.load()
+cpu.run()
