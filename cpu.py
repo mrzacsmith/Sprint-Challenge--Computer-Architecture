@@ -27,3 +27,41 @@ SHR = 0b10101101
 XOR = 0b10101011
 OR = 0b10101010
 NOT = 0b01101001
+
+
+class CPU:
+    """
+    main cpu class
+    """
+
+    def __init__(self):
+
+    def load(self):
+
+    def trace(self):
+
+    def alu(self, op, reg_a, reg_b):
+
+    def LDI(self, reg_a, reg_b):
+    def HLT(self, reg_a, reg_b):
+    def PRN(self, reg_a, reg_b):
+    def MUL(self, reg_a, reg_b):
+    def NOP(self, reg_a, reg_b):
+    def POP(self, reg_a, reg_b):
+    def RET(self, reg_a, reg_b):
+    def CALL(self, reg_a, reg_b):
+    def PUSH(self, reg_a, reg_b):
+    def SP(self, reg_a, reg_b):
+    def ADD(self, reg_a, reg_b):
+    def SUB(self, reg_a, reg_b):
+    def CMP(self, reg_a, reg_b):
+    def EQ(self, reg_a, reg_b):
+    def JMP(self, reg_a, reg_b):
+    def JEQ(self, reg_a, reg_b):
+    def JNE(self, reg_a, reg_b):
+
+    def ram_read(self, address):
+
+    def ram_write(self, address, value)
+
+    def run(self):
