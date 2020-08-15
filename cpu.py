@@ -38,7 +38,7 @@ class CPU:
         self.ram = [0] * 256
         self.register = [0] * 8
         self.flag_register = [0] * 8
-        self.program_counter = 0
+        self.pc = 0
         self.running = True
         self.branch_table = {
             LDI: self.LDI,
@@ -103,9 +103,21 @@ class CPU:
     def SUB(self, reg_a, reg_b):
     def CMP(self, reg_a, reg_b):
     def EQ(self, reg_a, reg_b):
+
     def JMP(self, reg_a, reg_b):
+        self.pc = self.reg[reg_a]
+
     def JEQ(self, reg_a, reg_b):
+        if self.flag_reg[EQ] == 0b00000001:
+            self.pc = self.reg[reg_a]
+        else:
+            self.pc += 2
+
     def JNE(self, reg_a, reg_b):
+        if self.flag_reg[EQ] == 0b00000000:
+            self.pc = self.reg[reg_a]
+        else:
+            self.pc += 2
 
     def ram_read(self, address):
         return self.ram[address]
