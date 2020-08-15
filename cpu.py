@@ -115,3 +115,11 @@ class CPU:
 
     def run(self):
         while self.running:
+            ir = self.ram_read(self.pc):
+            pc_flag = (ir & 0b00010000) >> 4
+            reg_num1 = self.ram[self.pc + 1]
+            reg_num2 = self.ram[self.pc + 2]
+            self.branch_table[ir](reg_num1, reg_num2)
+            if pc_flag == 0:
+                move = int((ir & 0b11000000) >> 6)
+                self.pc += move + 1
