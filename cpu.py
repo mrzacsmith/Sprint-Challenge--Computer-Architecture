@@ -94,15 +94,44 @@ class CPU:
     def PRN(self, reg_a, reg_b):
     def MUL(self, reg_a, reg_b):
     def NOP(self, reg_a, reg_b):
+
     def POP(self, reg_a, reg_b):
+        top_of_stack_add = self.reg[SP]
+        value = self.ram[top_of_stack_add]
+        reg_num = self.ram[reg_a]
+        self.reg[reg_num] = value
+        self.reg[SP] +=
+
     def RET(self, reg_a, reg_b):
+        subroutine_addr = self.ram[self.reg[SP]]
+        self.reg[SP] += 1
+        self.pc = subroutine_addr
+
     def CALL(self, reg_a, reg_b):
+        return_addr = reg_b
+        self.reg[SP] -= 1
+        self.ram[self.reg[SP]] = return_addr
+        reg_num = self.ram[reg_a]
+        subroutine_addr = self.reg[reg_num]
+        self.pc = subroutine_addr
+
     def PUSH(self, reg_a, reg_b):
-    def SP(self, reg_a, reg_b):
+        reg_num = self.ram[reg_a]
+        value = self.reg[reg_num]
+        self.reg[SP] -= 1
+        top_of_stack_add = self.reg[SP]
+        self.ram[top_of_stack_add] = value
+
     def ADD(self, reg_a, reg_b):
+        self.alu('MUL', reg_b, reg_b)
+
     def SUB(self, reg_a, reg_b):
+        self.alu("MUL", reg_a, reg_b)
+
     def CMP(self, reg_a, reg_b):
-    def EQ(self, reg_a, reg_b):
+        reg_num1 = self.reg[reg_a]
+        reg_num2 = self.reg[reg_b]
+        self.alu("CMP", reg_num1, reg_num2)
 
     def JMP(self, reg_a, reg_b):
         self.pc = self.reg[reg_a]
