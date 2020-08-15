@@ -36,8 +36,8 @@ class CPU:
 
     def __init__(self):
         self.ram = [0] * 256
-        self.register = [0] * 8
-        self.flag_register = [0] * 8
+        self.reg = [0] * 8
+        self.flag_reg = [0] * 8
         self.pc = 0
         self.running = True
         self.branch_table = {
