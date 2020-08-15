@@ -35,6 +35,28 @@ class CPU:
     """
 
     def __init__(self):
+        self.ram = [0] * 256
+        self.register = [0] * 8
+        self.flag_register = [0] * 8
+        self.program_counter = 0
+        self.running = True
+        self.branch_table = {
+            NOP: self.NOP,
+            HLT: self.HLT,
+            PRN: self.PRN,
+            LDI: self.LDI,
+            MUL: self.MUL,
+            ADD: self.ADD,
+            SUB: self.SUB,
+            PUSH: self.PUSH,
+            POP: self.POP,
+            CALL: self.CALL,
+            RET: self.RET,
+            CMP: self.CMP,
+            JMP: self.JMP,
+            JEQ: self.JEQ,
+            JNE: self.JNE,
+        }
 
     def load(self):
 
@@ -61,7 +83,10 @@ class CPU:
     def JNE(self, reg_a, reg_b):
 
     def ram_read(self, address):
+        return self.ram[address]
 
     def ram_write(self, address, value)
+    self.ram[address] = value
 
     def run(self):
+        while self.running:
