@@ -75,6 +75,17 @@ class CPU:
             address += 1
 
     def trace(self):
+        print(f"TRACE: %02X | %02X %02X %02X |" % (
+            self.pc, ,
+            self.ram_read(self.pc),
+            self.ram_read(self.pc + 1),
+            self.ram_read(self.pc + 2)
+        ), end='')
+
+        for i in range(8):
+            print(" %02X" % self.reg[i], end='')
+
+        print()
 
     def alu(self, op, reg_a, reg_b):
 
