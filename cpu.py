@@ -90,10 +90,19 @@ class CPU:
     def alu(self, op, reg_a, reg_b):
 
     def LDI(self, reg_a, reg_b):
+        self.reg[reg_a] = reg_b
+
     def HLT(self, reg_a, reg_b):
+        self.running = False
+
     def PRN(self, reg_a, reg_b):
+        print(self.reg[reg_a])
+
     def MUL(self, reg_a, reg_b):
+        self.alu('MUL', reg_a, reg_b)
+
     def NOP(self, reg_a, reg_b):
+        pass
 
     def POP(self, reg_a, reg_b):
         top_of_stack_add = self.reg[SP]
